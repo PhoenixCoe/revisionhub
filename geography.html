@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Geography | Revision Hub | Ipswich Academy</title>
+    <link rel="stylesheet" href="index.css?v=20260929b" />
+    <link rel="stylesheet" href="revision.css?v=20260929b" />
+    <link rel="stylesheet" href="navigation.css?v=20260929b" />
+    <link rel="stylesheet" href="layout.css?v=20260929b" />
+    <link rel="icon" href="images/ipswich-academy-favicon.ico" />
+    <link rel="stylesheet" href="account.css?v=20260929b" />
+    <link rel="stylesheet" href="original-hub.css?v=purple-glow1" />
+    <link rel="stylesheet" href="vendor/fontawesome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="vendor/fontawesome/css/solid.min.css" />
+  </head>
+  <body data-page="subjects/geography">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="navigation-shell">
+      <nav class="main-navigation" aria-label="Main navigation">
+        <a class="nav-item" href="index.html" data-nav="home"
+          ><svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m3 10 9-7 9 7v11h-6v-7H9v7H3z" /></svg
+          ><span>Home</span></a
+        ><button
+          class="nav-item"
+          id="subjects-button"
+          data-nav="subjects"
+          aria-expanded="false"
+          aria-controls="subjects-panel"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z" /></svg
+          ><span>Subjects</span
+          ><span class="chevron" aria-hidden="true">⌄</span></button
+        ><a
+          class="nav-item"
+          href="revision-skills.html"
+          data-nav="revision-skills"
+          ><svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 18h6M10 22h4M8 14a7 7 0 1 1 8 0l-1 4H9z" /></svg
+          ><span>Revision skills</span></a
+        ><a class="nav-item" href="intervention.html" data-nav="intervention"
+          ><svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM1 21v-3c0-7 14-7 14 0v3M17 4a4 4 0 0 1 0 8M18 15c4 0 5 2 5 6"
+            /></svg
+          ><span>Intervention</span></a
+        ><a class="nav-item account-nav" href="account.html" data-nav="account"
+          ><svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="7" r="4" />
+            <path d="M4 22v-3a8 8 0 0 1 16 0v3" /></svg
+          ><span>My revision</span></a
+        ><button
+          id="search-button"
+          class="nav-search"
+          aria-label="Find a resource"
+          aria-haspopup="dialog"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10" cy="10" r="6" />
+            <path d="m15 15 6 6" /></svg
+          ><span>Find a resource</span>
+        </button>
+      </nav>
+      <section
+        id="subjects-panel"
+        class="subjects-panel"
+        aria-labelledby="subjects-menu-title"
+        hidden
+      >
+        <div class="panel-heading">
+          <div>
+            <h2 id="subjects-menu-title">Subjects</h2>
+            <p>Choose a subject for exam information and revision resources.</p>
+          </div>
+          <button
+            type="button"
+            class="close-subjects"
+            id="close-subjects"
+            aria-label="Close subjects"
+          >
+            ×
+          </button>
+        </div>
+        <div class="subject-menu-toolbar">
+          <label class="search-field"
+            ><svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10" cy="10" r="6" />
+              <path d="m15 15 6 6" /></svg
+            ><input
+              type="search"
+              id="menu-search"
+              placeholder="Search subjects"
+              aria-label="Search subjects"
+              autocomplete="off"
+          /></label>
+          <div class="menu-filters" role="group" aria-label="Subjects to show">
+            <button type="button" data-menu-filter="all" aria-pressed="true">
+              All subjects</button
+            ><button
+              type="button"
+              data-menu-filter="saved"
+              aria-pressed="false"
+            >
+              My choices
+            </button>
+          </div>
+        </div>
+        <p id="menu-count" aria-live="polite"></p>
+        <div id="menu-subjects"></div>
+        <div class="subject-menu-footer">
+          <a href="subjects.html"
+            >View subject directory
+            <svg
+              class="ql-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              width="22"
+              height="22"
+              aria-hidden="true"
+            >
+              <path
+                d="M5 12h14M12 5l7 7-7 7"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              /></svg></a
+          ><a href="account.html"
+            >Manage my subjects
+            <svg
+              class="ql-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              width="22"
+              height="22"
+              aria-hidden="true"
+            >
+              <path
+                d="M5 12h14M12 5l7 7-7 7"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              /></svg
+          ></a>
+        </div>
+      </section>
+    </div>
+    <header class="hero subject-hero">
+      <div
+        class="hero-img"
+        style="
+          background-image: url(&quot;images/ipswich-academy-hero.png&quot;);
+        "
+      ></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-content__layout">
+          <div class="page-hero-icon" aria-hidden="true"></div>
+          <div class="hero-content__text">
+            <h1>Geography</h1>
+            <p>Revision resources, course information and exam guidance.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+    <dialog id="search-dialog" aria-labelledby="search-title">
+      <div class="dialog-heading">
+        <h2 id="search-title">Find your revision resources</h2>
+        <button id="close-search" aria-label="Close search">×</button>
+      </div>
+      <label class="global-search-field"
+        ><span>Search subjects, topics and resources</span
+        ><input
+          id="global-search"
+          type="search"
+          placeholder="Try past papers, flashcards or biology"
+          autocomplete="off"
+      /></label>
+      <p id="search-status" aria-live="polite"></p>
+      <div id="search-results"></div>
+    </dialog>
+    <main id="main" tabindex="-1"></main>
+    <footer class="hub-footer">
+      <div class="hub-footer-inner">
+        <p class="links-footer__name">Ipswich Academy</p>
+        <p class="links-footer__detail">
+          Part of Paradigm Trust &middot; Braziers Wood Road, Ipswich IP3 0SP
+        </p>
+        <p class="links-footer__detail">
+          01473 550040 &middot; info@ipswichacademy.org.uk
+        </p>
+        <p class="links-footer__detail">Made by Phoenix Coe</p>
+      </div>
+    </footer>
+    <noscript
+      ><p>Please enable JavaScript to browse the revision pages.</p></noscript
+    >
+    <script src="account-store.js?v=footer-clean2"></script>
+    <script src="papers.js?v=1"></script>
+    <script src="content.js"></script>
+    <script src="index.js?v=footer-clean2"></script>
+    <script src="corners.js?v=cleanup1" defer></script>
+  </body>
+</html>
