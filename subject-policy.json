@@ -1,0 +1,32 @@
+{
+  "optionCount": 4,
+  "core": [
+    "subjects/english",
+    "subjects/mathematics"
+  ],
+  "combined": [
+    "subjects/science-combined"
+  ],
+  "triple": [
+    "subjects/biology-triple-science",
+    "subjects/chemistry-triple-science",
+    "subjects/physics-triple-science"
+  ],
+  "options": [
+    "subjects/art",
+    "subjects/business-studies",
+    "subjects/computer-science",
+    "subjects/film-studies",
+    "subjects/french",
+    "subjects/further-maths-and-statistics",
+    "subjects/geography",
+    "subjects/health-and-fitness",
+    "subjects/history",
+    "subjects/hospitality-and-catering",
+    "subjects/imedia",
+    "subjects/music",
+    "subjects/pe",
+    "subjects/performing-arts",
+    "subjects/religious-studies"
+  ]
+}

@@ -1,12 +1,13 @@
 /* Match the Student Hub's outward-facing corners to the actual layout. */
 (() => {
   const selector =
-    'button:not([role="tab"]),a.nav-item,a.text-button,a.primary-button,a.ol-item,a.subject-menu-link,a.action-card,a.exam-notice,a.dashboard-subject,a.search-result,a.student-profile,.subject-card,.setup-subject,a.ql-tile';
+    'button:not([role="tab"]),a.nav-item,a.text-button,a.primary-button,a.ol-item,a.subject-menu-link,a.action-card,a.exam-notice,a.dashboard-subject,a.search-result,a.student-profile,.study-sidebar nav a,.subject-card,.setup-subject,a.ql-tile';
   let pending = false;
   function update() {
     pending = false;
     const groups = new Map();
     document.querySelectorAll(selector).forEach((el) => {
+      if (el.closest(".main-navigation")) return;
       if (el.matches(".ql-tile") && el.closest(".subject-card")) return;
       const rect = el.getBoundingClientRect();
       if (!rect.width || !rect.height) return;

@@ -2923,3 +2923,65 @@ html body #search-dialog {
     box-shadow: none;
   }
 }
+
+/* School release: shared navigation, compact layout and original hero scale. */
+html body .main-navigation { display:flex; align-items:center; gap:20px; padding:12px 0; border-radius:0; background:white; }
+html body .nav-brand { display:flex; flex:none; }
+html body .nav-brand img { width:36px; height:36px; object-fit:contain; }
+html body .nav-pages, html body .nav-tools { display:flex; align-items:center; gap:4px; }
+html body .nav-tools { margin-left:auto; }
+html body .main-navigation .nav-item { display:flex; align-items:center; justify-content:center; gap:8px; min-height:44px; height:44px; width:auto; min-width:0; padding:0 14px; border:0; border-radius:10px!important; background:transparent; font-size:13px; line-height:1.2; color:#2d2d4e; box-shadow:none!important; transform:none!important; }
+html body .main-navigation .nav-item:hover, html body .main-navigation .nav-item.active { background:#66197c; color:white; }
+html body .main-navigation .nav-search { width:auto; height:44px; min-height:44px; padding:0 12px; display:flex; gap:8px; align-items:center; border-radius:10px!important; }
+html body #mobile-menu-toggle { display:none; }
+html body .hero { height:200px; min-height:200px; display:flex; align-items:center; }
+html body .hero-content { width:100%; padding:0 60px; }
+html body .hero-content__layout { gap:36px; align-items:center; }
+html body .hero-content h1 { font-size:54px; line-height:1.05; letter-spacing:-.5px; margin-bottom:8px; }
+html body .hero-content p { font-size:17px; }
+html body { --hero-symbol-size:100px; }
+html body .section-heading, html body .content-section>h2, html body .paper-heading h2 { padding-right:0; }
+html body .section-heading::before, html body .content-section>h2::before, html body .paper-heading h2::before { display:none; }
+html body .content-section { margin-top:28px; margin-bottom:28px; }
+html body .hub-container { padding-top:28px; padding-bottom:28px; }
+html body .login-layout { align-items:stretch; gap:24px; }
+html body .login-card { align-self:stretch; display:flex; flex-direction:column; justify-content:center; }
+html body .login-intro { min-height:600px; }
+html body .login-school-brand { background:transparent; padding:0; border-radius:0; box-shadow:none; }
+html body .login-school-logo { width:64px; height:64px; background:transparent; border-radius:0; }
+html body .login-hub-logo { width:90px; height:90px; object-fit:contain; background:transparent; border-radius:0; margin-bottom:20px; }
+html body .login-intro-copy { padding-top:24px; }
+html body .login-features { padding-left:18px; color:white; font-size:14px; line-height:1.7; margin-top:16px; }
+html body .option-error { max-width:440px; width:calc(100% - 40px); border:0; border-radius:20px 20px 36px 20px; padding:28px; color:#2d2d4e; }
+html body .option-error::backdrop { background:rgba(30,15,40,.5); backdrop-filter:blur(4px); }
+html body .option-error h2 { margin-bottom:14px; }
+html body .option-error p { margin-bottom:24px; line-height:1.6; }
+@media (hover:hover) {
+ html body .exam-notice:hover { border-radius:20px!important; transform:translateY(-2px); background:#66197c!important; color:white!important; box-shadow:0 6px 24px #66197c4d!important; }
+ html body .exam-notice.notice-event:hover { background:#d4703f!important; box-shadow:0 6px 24px #d4703f4d!important; }
+ html body .exam-notice:hover :is(h2,h3,p,span,i) { color:white!important; }
+}
+@media(max-width:1100px) { html body .main-navigation { gap:8px; } html body .main-navigation .nav-item { padding:0 9px; } html body .nav-search span { display:none; } }
+@media(max-width:800px) { html body .hero-content { padding:0 28px; } }
+@media(max-width:760px) {
+ html body .main-navigation { flex-wrap:wrap; justify-content:space-between; gap:8px; }
+ html body #mobile-menu-toggle { display:flex; align-items:center; gap:12px; height:44px; padding:0 16px; border-radius:12px!important; margin-left:auto; }
+ html body .nav-pages, html body .nav-tools { display:none; }
+ html body .main-navigation.menu-open .nav-pages { display:flex; flex-direction:column; width:100%; align-items:stretch; }
+ html body .main-navigation.menu-open .nav-tools { display:flex; width:100%; justify-content:flex-end; margin-left:0; }
+ html body .main-navigation .nav-item { width:100%; justify-content:flex-end; text-align:right; }
+ html body .hero-content h1 { font-size:clamp(26px,6vw,42px); overflow-wrap:anywhere; }
+ html body .hero-content__layout { gap:20px; }
+ html body .login-layout { grid-template-columns:1fr; padding:24px 20px; }
+ html body .login-intro { min-height:0; }
+ html body .hero-content { padding:0 20px; }
+}
+@media(prefers-reduced-motion:reduce) { html body *, html body *::before, html body *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+
+html body .login-school-brand, html body .login-school-logo, html body .login-hub-logo { background:none!important; box-shadow:none!important; border:0!important; }
+html body .login-school-logo { width:44px; height:44px; }
+html body .login-hub-logo { width:64px; height:64px; margin-bottom:12px; }
+html body .login-details { margin:20px 0; padding:20px 0; border-top:1px solid #ddd; border-bottom:1px solid #ddd; }
+html body .login-details h3 { font-size:15px; margin:0 0 8px; }
+html body .login-details p { font-size:13px; line-height:1.65; margin:0 0 18px; }
+html body .login-details p:last-child { margin-bottom:0; }

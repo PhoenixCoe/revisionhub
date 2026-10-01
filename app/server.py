@@ -38,6 +38,18 @@ def safe_picture(value):
     return value if url.scheme=='https' and (url.hostname or '').endswith('.googleusercontent.com') and not url.username and not url.password else ''
 
 def hashed(value): return hashlib.sha256(value.encode()).hexdigest()
+SUBJECT_POLICY = json.loads((ROOT / 'subject-policy.json').read_text())
+def valid_subjects(subjects):
+    if not isinstance(subjects, list) or any(not isinstance(s, str) for s in subjects): return False
+    selected = set(subjects)
+    policy = SUBJECT_POLICY
+    known = set(policy['core'] + policy['combined'] + policy['triple'] + policy['options'])
+    science = selected & set(policy['combined'] + policy['triple'])
+    return (len(selected) == len(subjects) and selected <= known
+            and set(policy['core']) <= selected
+            and science in (set(policy['combined']), set(policy['triple']))
+            and len(selected & set(policy['options'])) == policy['optionCount'])
+
 def valid_profile(data):
     subjects=data.get('subjects'); tasks=data.get('tasks')
     if not isinstance(subjects,list) or len(subjects)>30 or any(not isinstance(s,str) or len(s)>100 for s in subjects): return False
@@ -157,6 +169,7 @@ class Handler(SimpleHTTPRequestHandler):
             return self.response(200,{'user':None},self.cookie_header('ia_session','',0))
         if self.path=='/api/profile':
             profile={'subjects':data.get('subjects',json.loads(u['subjects'])),'tasks':data.get('tasks',json.loads(u['tasks']))}
+            if 'subjects' in data and not valid_subjects(data['subjects']): return self.response(400,{'error':'Choose exactly four options, plus English, Maths and one science course.'})
             if not valid_profile(profile): return self.response(400,{'error':'Check your subjects and revision tasks.'})
             tasks=[{'id':t['id'],'text':t['text'].strip(),'done':t['done']} for t in profile['tasks']]
             with db() as c:

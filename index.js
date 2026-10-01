@@ -1,5 +1,6 @@
 (async () => {
-  await window.RevisionAccount.ready;
+  try { await Promise.all([window.RevisionAccount.ready, window.RevisionSubjects.ready]); }
+  catch (error) { document.getElementById('main').textContent = error.message; return; }
   const startPage = document.body.dataset.page;
   if (startPage?.endsWith("english-flashcards")) {
     location.replace("english.html#flashcards");
@@ -24,7 +25,7 @@
     }
     document.body.classList.add("onboarding");
     const script = document.createElement("script");
-    script.src = "login.js?v=footer-clean2";
+    script.src = "login.js?v=school1";
     document.body.append(script);
     return;
   }
@@ -46,21 +47,7 @@
     }
   }
   if (!Array.isArray(profileSubjects)) profileSubjects = [];
-  if (
-    profileSubjects &&
-    (!["subjects/mathematics", "subjects/english"].every((id) =>
-      profileSubjects.includes(id),
-    ) ||
-      !(
-        profileSubjects.includes("subjects/science-combined") ||
-        [
-          "subjects/biology-triple-science",
-          "subjects/chemistry-triple-science",
-          "subjects/physics-triple-science",
-        ].every((id) => profileSubjects.includes(id))
-      ))
-  )
-    setupComplete = false;
+  setupComplete = setupComplete && window.RevisionSubjects.valid(profileSubjects);
   if (
     startPage === "setup" ||
     (!setupComplete &&
@@ -70,7 +57,7 @@
     document.body.classList.add("onboarding");
     document.title = "Choose your subjects | Revision Hub";
     const script = document.createElement("script");
-    script.src = "setup.js?v=choices3";
+    script.src = "setup.js?v=school1";
     document.body.append(script);
     return;
   }
@@ -239,12 +226,12 @@
       ? "Hello, " + name + "!"
       : "Hello!";
     document.querySelector(".hero-content__text>p").textContent =
-      "Your subjects, your checklist, your next step.";
+      "Your subjects and revision checklist.";
     const selected = subjects.filter((p) => savedSubjects().includes(p.id));
-    main.innerHTML = `<div class="hub-container platform-home"><section class="home-progress" aria-labelledby="progress-title"><div class="section-row"><h2 class="section-heading" id="progress-title">Your study overview</h2><a class="text-button" href="account.html">Open checklist <svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><dl class="revision-stats"><div><dt>Options chosen</dt><dd>${selected.filter((p) => !["subjects/english", "subjects/mathematics", "subjects/science-combined", "subjects/biology-triple-science", "subjects/chemistry-triple-science", "subjects/physics-triple-science"].includes(p.id)).length}</dd></div><div><dt>Tasks completed</dt><dd>${completed}<small> of ${tasks.length}</small></dd></div><div><dt>Tasks still to do</dt><dd>${tasks.length - completed}</dd></div></dl><p class="stats-caption">${tasks.length ? "Maths, English and Science are compulsory and are not counted as options. Counts from your current revision checklist. Completing a task means you have ticked it off." : "Maths, English and Science are not counted as options. No revision tasks yet. Add your first task in My revision to start tracking your checklist."} ${user ? "Saved to your school account." : "Saved in this browser."}</p></section><section class="home-key-info"><div class="section-row"><div><h2 class="section-heading">Key information</h2></div></div><div class="key-info-grid"><a class="exam-notice" href="https://drive.google.com/file/d/1HS9sv_103hDHQ5vN4-NzLmHnm5gUY16Q/view?usp=sharing" target="_blank" rel="noopener noreferrer"><span class="notice-label">YEAR 11</span><h3>November mock timetable</h3><p>Check the school’s printable timetable and plan your preparation.</p><span class="card-action">View timetable ${arrow}</span></a><a class="exam-notice intervention-notice" href="intervention.html"><span class="notice-label">EXTRA SUPPORT</span><h3>Intervention sessions</h3><p>Find out about extra help with your revision.</p><span class="card-action">View intervention ${arrow}</span></a></div></section><section class="dashboard-launch"><div>${icon("book")}<div><h2>My revision</h2><p>Open your subjects and revision checklist.</p></div></div><a class="primary-link" href="account.html">Open My revision ${arrow}</a></section><section class="home-subjects"><div class="section-row"><h2 class="section-heading">My subjects</h2><a class="text-button" href="account.html">Manage subjects ${arrow}</a></div><div class="quicklinks">${selected.map((p) => subjectCard(p)).join("")}</div>${selected.length ? "" : "<p>Choose your subjects in setup to get started.</p>"}</section><section class="platform-support"><div class="section-row"><h2 class="section-heading">Revision help</h2></div><div class="action-grid"><a class="action-card" href="revision-skills.html">${icon("book")}<div><h3>Revision skills</h3><p>The school’s advice on revision and self-testing.</p><span class="card-action">Read the advice ${arrow}</span></div></a><a class="action-card" href="https://drive.google.com/open?id=1Lht-ivUX8hHC_ctdWN8eaKW8sl4xVoQ7ptxsj7jLgAU" target="_blank" rel="noopener noreferrer">${icon("calendar")}<div><h3>Plan your week</h3><p>Download a blank weekly revision timetable.</p><span class="card-action">Open template ${arrow}</span></div></a><a class="action-card flashcards-highlight" href="english.html#flashcards">${icon("book")}<div><h3>English flashcards</h3><p>Practise texts, poetry and language skills.</p><span class="card-action">Open flashcards ${arrow}</span></div></a></div></section><div class="platform-footer-help"><strong>Need help finding something?</strong><p>Ask your subject teacher or Miss Ince.</p><a href="subjects.html">Browse every subject ${arrow}</a></div></div>`;
+    main.innerHTML = `<div class="hub-container platform-home"><section class="home-progress" aria-labelledby="progress-title"><div class="section-row"><h2 class="section-heading" id="progress-title">Your revision</h2><a class="text-button" href="account.html">Open checklist <svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><dl class="revision-stats"><div><dt>Options chosen</dt><dd>${selected.filter((p) => !["subjects/english", "subjects/mathematics", "subjects/science-combined", "subjects/biology-triple-science", "subjects/chemistry-triple-science", "subjects/physics-triple-science"].includes(p.id)).length}</dd></div><div><dt>Tasks completed</dt><dd>${completed}<small> of ${tasks.length}</small></dd></div><div><dt>Tasks still to do</dt><dd>${tasks.length - completed}</dd></div></dl><p class="stats-caption">${tasks.length ? "Completed tasks are the ones you have ticked off." : "No tasks yet. Add a topic or practice paper to your checklist."} ${user ? "Saved to your school account." : "Saved in this browser."}</p></section><section class="home-key-info"><div class="section-row"><div><h2 class="section-heading">Key information</h2></div></div><div class="key-info-grid"><a class="exam-notice notice-event" href="https://drive.google.com/file/d/1HS9sv_103hDHQ5vN4-NzLmHnm5gUY16Q/view?usp=sharing" target="_blank" rel="noopener noreferrer"><span class="notice-label">YEAR 11</span><h3>November mock timetable</h3><p>Check the school’s printable timetable and plan your preparation.</p><span class="card-action">View timetable ${arrow}</span></a><a class="exam-notice intervention-notice notice-support" href="intervention.html"><span class="notice-label">EXTRA SUPPORT</span><h3>Intervention sessions</h3><p>Find out about extra help with your revision.</p><span class="card-action">View intervention ${arrow}</span></a></div></section><section class="dashboard-launch"><div>${icon("book")}<div><h2>My revision</h2><p>Open your subjects and revision checklist.</p></div></div><a class="primary-link" href="account.html">Open My revision ${arrow}</a></section><section class="home-subjects"><div class="section-row"><h2 class="section-heading">My subjects</h2><a class="text-button" href="account.html">Manage subjects ${arrow}</a></div><div class="quicklinks">${selected.map((p) => subjectCard(p)).join("")}</div>${selected.length ? "" : "<p>Choose your subjects in setup to get started.</p>"}</section><section class="platform-support"><div class="section-row"><h2 class="section-heading">Revision help</h2></div><div class="action-grid"><a class="action-card" href="revision-skills.html">${icon("book")}<div><h3>Revision skills</h3><p>The school’s advice on revision and self-testing.</p><span class="card-action">Read the advice ${arrow}</span></div></a><a class="action-card" href="https://drive.google.com/open?id=1Lht-ivUX8hHC_ctdWN8eaKW8sl4xVoQ7ptxsj7jLgAU" target="_blank" rel="noopener noreferrer">${icon("calendar")}<div><h3>Plan your week</h3><p>Download a blank weekly revision timetable.</p><span class="card-action">Open template ${arrow}</span></div></a><a class="action-card flashcards-highlight" href="english.html#flashcards">${icon("book")}<div><h3>English flashcards</h3><p>Practise texts, poetry and language skills.</p><span class="card-action">Open flashcards ${arrow}</span></div></a></div></section><div class="platform-footer-help"><strong>Need help finding something?</strong><p>Ask your subject teacher or Miss Ince.</p><a href="subjects.html">Browse every subject ${arrow}</a></div></div>`;
   }
   function directory() {
-    main.innerHTML = `<div class="hub-container"><header class="directory-intro"><div class="breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><span>Subjects</span></div><h2 id="page-title">Your subjects</h2><p>Course details, exam information and revision resources, all in one place.</p></header><div class="directory-controls"><div class="filter-chips" role="group" aria-label="Filter subjects"><button data-filter="all" aria-pressed="true">All subjects</button><button data-filter="saved" aria-pressed="false">My subjects</button><button data-filter="core" aria-pressed="false">Core</button><button data-filter="options" aria-pressed="false">Options</button><button data-filter="science" aria-pressed="false">Triple science</button></div><label class="search-field"><input id="subject-search" type="search" aria-label="Search subjects" placeholder="Search subjects"></label></div><div class="directory-meta"><span id="result-count" aria-live="polite"></span><span>Choose your subjects in setup.</span></div><div class="quicklinks" id="subject-grid"></div><div id="empty" class="empty-state" hidden><h3>No subjects to show</h3><p id="empty-message"></p><button class="text-button" id="reset-directory">Show all subjects</button></div></div>`;
+    main.innerHTML = `<div class="hub-container"><header class="directory-intro"><div class="breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><span>Subjects</span></div><h2 id="page-title">Your subjects</h2><p>Choose a subject to find exam details and revision resources.</p></header><div class="directory-controls"><div class="filter-chips" role="group" aria-label="Filter subjects"><button data-filter="all" aria-pressed="true">All subjects</button><button data-filter="saved" aria-pressed="false">My subjects</button><button data-filter="core" aria-pressed="false">Core</button><button data-filter="options" aria-pressed="false">Options</button><button data-filter="science" aria-pressed="false">Triple science</button></div><label class="search-field"><input id="subject-search" type="search" aria-label="Search subjects" placeholder="Search subjects"></label></div><div class="directory-meta"><span id="result-count" aria-live="polite"></span><span>Choose your subjects in setup.</span></div><div class="quicklinks" id="subject-grid"></div><div id="empty" class="empty-state" hidden><h3>No subjects to show</h3><p id="empty-message"></p><button class="text-button" id="reset-directory">Show all subjects</button></div></div>`;
     let filter = "all";
     const search = document.getElementById("subject-search");
     function render() {
@@ -492,7 +479,7 @@
 
   function paperOverview(page, i) {
     const d = window.PAPER_DETAILS[page.id];
-    return `<section class="content-section paper-overview" id="section-${i}" data-category="exams" aria-labelledby="heading-${i}"><div class="paper-heading"><div><p class="paper-eyebrow">COURSE & ASSESSMENT</p><h2 id="heading-${i}">Your exam papers</h2></div><span class="board-label"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> ${esc(d.board)}</span></div><p class="paper-intro">Compare the papers below, then open each one for its question structure and course details.</p>${d.note ? `<p class="paper-note">${esc(d.note)}</p>` : ""}<div class="paper-cards">${d.papers.map((p, n) => `<article class="paper-card"><div class="paper-card-heading"><span class="paper-number" aria-hidden="true">${String(n + 1).padStart(2, "0")}</span><h3>${esc(p.name)}</h3></div><dl><div><dt><i class="fa-solid fa-clock" aria-hidden="true"></i> Duration</dt><dd>${esc(p.duration)}</dd></div><div><dt><i class="fa-solid fa-pen" aria-hidden="true"></i> Marks</dt><dd>${esc(p.marks)}</dd></div><div><dt><i class="fa-solid fa-chart-pie" aria-hidden="true"></i> Weighting</dt><dd>${esc(p.weight)}</dd></div></dl><details class="paper-structure" ${n === 0 ? "open" : ""}><summary>Questions and paper details <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></summary><div><h4>Questions & structure</h4><p>${esc(p.questions)}</p>${p.detail ? `<h4>What to expect</h4><p>${esc(p.detail)}</p>` : ""}</div></details></article>`).join("")}</div><aside class="exam-next"><i class="fa-solid fa-arrow-turn-up" aria-hidden="true"></i><div><h3>Put the paper into practice</h3><p>Pick a topic to revise, try a practice question, then check your answer against the mark scheme. Record what you need to revisit in your checklist.</p><a class="text-button" href="account.html">Open my revision checklist <svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></aside><p class="paper-source">${esc(d.provenance)} ${d.source ? `<a href="${esc(d.source)}" target="_blank" rel="noopener noreferrer">Exam-board specification ↗</a>` : ""} ${d.extraSource ? `<a href="${esc(d.extraSource)}" target="_blank" rel="noopener noreferrer">Literature specification ↗</a>` : ""}</p></section>`;
+    return `<section class="content-section paper-overview" id="section-${i}" data-category="exams" aria-labelledby="heading-${i}"><div class="paper-heading"><div><p class="paper-eyebrow">COURSE & ASSESSMENT</p><h2 id="heading-${i}">Your exam papers</h2></div><span class="board-label"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> ${esc(d.board)}</span></div><p class="paper-intro">Compare the papers below, then open each one for its question structure and course details.</p>${d.note ? `<p class="paper-note">${esc(d.note)}</p>` : ""}<div class="paper-cards">${d.papers.map((p, n) => `<article class="paper-card"><div class="paper-card-heading"><span class="paper-number" aria-hidden="true">${String(n + 1).padStart(2, "0")}</span><h3>${esc(p.name)}</h3></div><dl><div><dt><i class="fa-solid fa-clock" aria-hidden="true"></i> Duration</dt><dd>${esc(p.duration)}</dd></div><div><dt><i class="fa-solid fa-pen" aria-hidden="true"></i> Marks</dt><dd>${esc(p.marks)}</dd></div><div><dt><i class="fa-solid fa-chart-pie" aria-hidden="true"></i> Weighting</dt><dd>${esc(p.weight)}</dd></div></dl><details class="paper-structure" ${n === 0 ? "open" : ""}><summary>Questions and paper details <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></summary><div><h4>Questions & structure</h4><p>${esc(p.questions)}</p>${p.detail ? `<h4>What to expect</h4><p>${esc(p.detail)}</p>` : ""}</div></details></article>`).join("")}</div><aside class="exam-next"><i class="fa-solid fa-arrow-turn-up" aria-hidden="true"></i><div><h3>Practise for this paper</h3><p>Pick a topic to revise, try a practice question, then check your answer against the mark scheme. Record what you need to revisit in your checklist.</p><a class="text-button" href="account.html">Open my revision checklist <svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></aside><p class="paper-source">${esc(d.provenance)} ${d.source ? `<a href="${esc(d.source)}" target="_blank" rel="noopener noreferrer">Exam-board specification ↗</a>` : ""} ${d.extraSource ? `<a href="${esc(d.extraSource)}" target="_blank" rel="noopener noreferrer">Literature specification ↗</a>` : ""}</p></section>`;
   }
 
   function sectionHTML(g, i, page) {
@@ -574,10 +561,10 @@
     const intro = flashcards
       ? "Choose a text to open its flashcards and Quizlet set."
       : isSubject
-        ? "Find your resources, understand the exams and focus your revision."
+        ? "Exam details and revision resources for your course."
         : page.id === "revision-skills"
-          ? "Plan your time, test your knowledge and build a revision routine that works for you."
-          : "Get support from your teachers and make the most of revision sessions.";
+          ? "Advice on planning, practice questions and self-testing."
+          : "Find out when extra revision sessions are available.";
     main.innerHTML = `<div class="hub-container subject-container"><header class="subject-header"><div class="breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span>${isSubject ? '<a href="subjects.html">Subjects</a><span aria-hidden="true">›</span>' : ""}<span>${esc(title)}</span></div><div class="subject-title-row">${icon(icons[page.id.split("/").pop()] || "book")}<div><h2 tabindex="-1" id="page-title">${esc(title)}</h2><p>${intro}</p></div></div></header>${isSubject && categories.length > 1 ? `<div class="subject-tabs" role="tablist" aria-label="Subject information">${categories.map((c, i) => `<button role="tab" id="tab-${c}" data-category-tab="${c}" aria-selected="${i === 0}" tabindex="${i === 0 ? "0" : "-1"}" aria-controls="subject-panel">${labels[c]}</button>`).join("")}</div>` : ""}<div class="study-layout"><aside class="study-sidebar"><h3>Quick access</h3><nav aria-label="Page sections">${groups.map((g, i) => `<a href="#section-${i}" data-section-nav="${i}" data-category="${sectionCategory(g)}">${esc(sectionTitle(g.title))}</a>`).join("")}</nav><div class="study-help"><h3>Need help?</h3><p>Ask your subject teacher or Miss Ince if you can’t find what you need.</p><a href="revision-skills.html">Revision skills ${arrow}</a></div></aside><div class="page-content" id="subject-panel" ${isSubject && categories.length > 1 ? 'role="tabpanel" tabindex="0"' : ""}>${groups.map((g, i) => sectionHTML(g, i, page)).join("")}${page.id === "intervention" ? '<section class="content-section"><h2>Find your sessions</h2><p>Ask your subject teacher or Miss Ince for the current intervention timetable.</p></section>' : ""}</div></div></div>`;
     if (window.RevisionAccount.user?.departments?.includes(page.id)) {
       const edit = document.createElement("a");
@@ -696,7 +683,7 @@
   profileName.className = "student-name";
   profileName.textContent = profile?.name || "Sign in";
   profileLink.append(profileAvatar, profileName);
-  document.querySelector(".main-navigation").append(profileLink);
+  document.querySelector(".nav-tools").append(profileLink);
   const currentId = document.body.dataset.page || "home";
   const currentPage = pages.find((p) => p.id === currentId);
   const heroIcon = document.querySelector(".page-hero-icon");
@@ -752,6 +739,27 @@
     subjectButton.setAttribute("aria-expanded", String(opening));
     if (opening) document.getElementById("menu-search").focus();
   });
+  const nav = document.querySelector('.main-navigation');
+  const menuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileQuery = matchMedia('(max-width: 760px)');
+  function setMenu(open) {
+    nav.classList.toggle('menu-open', open);
+    menuToggle.setAttribute('aria-expanded', String(open));
+    menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    const closed = mobileQuery.matches && !open;
+    document.getElementById('primary-pages').inert = closed;
+    document.querySelector('.nav-tools').inert = closed;
+    if (!open) closeSubjects();
+  }
+  menuToggle.addEventListener('click', () => setMenu(!nav.classList.contains('menu-open')));
+  mobileQuery.addEventListener('change', () => setMenu(false));
+  document.addEventListener('keydown', event => {
+    if(event.key === 'Escape' && nav.classList.contains('menu-open')) { setMenu(false); menuToggle.focus(); }
+  });
+  document.addEventListener('click', event => {
+    if (!event.target.closest('.navigation-shell') && nav.classList.contains('menu-open')) setMenu(false);
+  });
+  setMenu(false);
   let menuFilter = "all";
   function renderMenu() {
     const term = document
@@ -830,6 +838,7 @@
   const searchResults = document.getElementById("search-results");
   document.getElementById("search-button").addEventListener("click", () => {
     closeSubjects();
+    setMenu(false);
     searchDialog.showModal();
     globalInput.focus();
     showResults();
