@@ -43,12 +43,12 @@ def valid_subjects(subjects):
     if not isinstance(subjects, list) or any(not isinstance(s, str) for s in subjects): return False
     selected = set(subjects)
     policy = SUBJECT_POLICY
-    known = set(policy['core'] + policy['combined'] + policy['triple'] + policy['options'])
+    known = set(policy['core'] + policy['combined'] + policy['triple'] + policy['options'] + policy['unlisted'])
     science = selected & set(policy['combined'] + policy['triple'])
     return (len(selected) == len(subjects) and selected <= known
             and set(policy['core']) <= selected
             and science in (set(policy['combined']), set(policy['triple']))
-            and len(selected & set(policy['options'])) == policy['optionCount'])
+            and len(selected & set(policy['options'] + policy['unlisted'])) == policy['optionCount'])
 
 def valid_profile(data):
     subjects=data.get('subjects'); tasks=data.get('tasks')

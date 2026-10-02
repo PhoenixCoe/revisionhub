@@ -12,7 +12,7 @@
           "'": "&#39;",
         })[c],
     );
-  const {core, combined, triple, optionCount} = window.RevisionSubjects.policy;
+  const {core, combined, triple, optionCount, unlisted} = window.RevisionSubjects.policy;
   let saved = [];
   try {
     saved = a.user
@@ -27,7 +27,7 @@
       ![...core, ...combined, ...triple].includes(p.id),
   ).sort((a, b) => a.title.localeCompare(b.title));
   const chosen = new Set(
-    saved.filter((id) => options.some((p) => p.id === id)),
+    saved.filter((id) => options.some((p) => p.id === id) || unlisted.includes(id)),
   );
   let science = saved.includes(combined[0])
     ? "combined"
@@ -69,7 +69,7 @@
   let step = 1;
   function render() {
     document.getElementById("main").innerHTML =
-      `<div class="hub-container setup-container"><div class="setup-brand"><img src="https://ipswichacademy.paradigmtrust.org/wp-content/uploads/2024/05/logo.png" alt="Ipswich Academy" class="setup-school-logo"></div><h2 tabindex="-1" id="setup-heading">${step === 1 ? "Choose your options" : "Choose your science course"}</h2><p class="setup-intro">${step === 1 ? "Choose your four option subjects." : "Choose the course you study at school."}</p>${step === 1 ? '<p class="setup-core-note">Maths, English and Science are included automatically.</p>' : ""}<form id="setup-form"><fieldset><legend class="setup-visually-hidden">${step === 1 ? "Your option subjects" : "Choose one science course"}</legend><div class="setup-grid ${step === 2 ? "science-grid" : ""}">${step === 1 ? options.map((p) => `<label class="setup-subject option-choice"><input type="checkbox" name="option" value="${esc(p.id)}" ${chosen.has(p.id) ? "checked" : ""}><span class="option-symbol" aria-hidden="true"><i class="fa-solid fa-${optionIcons[p.id.split("/").pop()] || "book-open"}"></i></span><span class="option-title">${esc(p.title)}</span><span class="option-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span></label>`).join("") : `<label class="setup-subject option-choice science-choice"><input type="radio" name="science" value="combined" required ${science === "combined" ? "checked" : ""}><span class="option-symbol" aria-hidden="true"><i class="fa-solid fa-flask"></i></span><span class="option-title">Combined Science</span><span class="option-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span></label><label class="setup-subject option-choice science-choice"><input type="radio" name="science" value="triple" required ${science === "triple" ? "checked" : ""}><span class="option-symbol" aria-hidden="true"><i class="fa-solid fa-atom"></i></span><span class="option-title">Triple Science<small>Biology, Chemistry and Physics</small></span><span class="option-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span></label>`}</div></fieldset><p id="setup-status" role="status"></p><div class="setup-actions">${step === 2 ? '<button type="button" class="text-button" id="setup-back"><svg class="ql-arrow back-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button>' : '<p id="selection-count" aria-live="polite"></p>'}<button class="primary-button" type="submit">${step === 1 ? 'Next <svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' : 'Start revising <svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'}</button></div></form><p class="account-caption">${a.user ? "Saved to your school account." : "Saved on this device."}</p></div>`;
+      `<div class="hub-container setup-container"><div class="setup-brand"><img src="https://ipswichacademy.paradigmtrust.org/wp-content/uploads/2024/05/logo.png" alt="Ipswich Academy" class="setup-school-logo"></div><h2 tabindex="-1" id="setup-heading">${step === 1 ? "Choose your options" : "Choose your science course"}</h2><p class="setup-intro">${step === 1 ? "Choose your four option subjects." : "Choose the course you study at school."}</p>${step === 1 ? '<p class="setup-core-note">Maths, English and Science are included automatically.</p>' : ""}<form id="setup-form"><fieldset><legend class="setup-visually-hidden">${step === 1 ? "Your option subjects" : "Choose one science course"}</legend><div class="setup-grid ${step === 2 ? "science-grid" : ""}">${step === 1 ? options.map((p) => `<label class="setup-subject option-choice"><input type="checkbox" name="option" value="${esc(p.id)}" ${chosen.has(p.id) ? "checked" : ""}><span class="option-symbol" aria-hidden="true"><i class="fa-solid fa-${optionIcons[p.id.split("/").pop()] || "book-open"}"></i></span><span class="option-title">${esc(p.title)}</span><span class="option-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span></label>`).join("") : `<label class="setup-subject option-choice science-choice"><input type="radio" name="science" value="combined" required ${science === "combined" ? "checked" : ""}><span class="option-symbol" aria-hidden="true"><i class="fa-solid fa-flask"></i></span><span class="option-title">Combined Science</span><span class="option-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span></label><label class="setup-subject option-choice science-choice"><input type="radio" name="science" value="triple" required ${science === "triple" ? "checked" : ""}><span class="option-symbol" aria-hidden="true"><i class="fa-solid fa-atom"></i></span><span class="option-title">Triple Science<small>Biology, Chemistry and Physics</small></span><span class="option-check" aria-hidden="true"><i class="fa-solid fa-check"></i></span></label>`}</div></fieldset>${step === 1 ? `<div class="missing-options"><button type="button" class="text-button" id="missing-option">One of my options is missing</button><p>For subjects without resources here, such as Citizenship. Each missing option counts towards your four.</p><ul>${[...chosen].filter(id => unlisted.includes(id)).map((id, i) => `<li>Missing option ${i + 1}<button type="button" class="text-button" data-remove-missing="${id}" aria-label="Remove missing option ${i + 1}">Remove</button></li>`).join('')}</ul></div>` : ''}<p id="setup-status" role="status"></p><div class="setup-actions">${step === 2 ? '<button type="button" class="text-button" id="setup-back"><svg class="ql-arrow back-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button>' : '<p id="selection-count" aria-live="polite"></p>'}<button class="primary-button" type="submit">${step === 1 ? 'Next <svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' : 'Start revising <svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'}</button></div></form><p class="account-caption">${a.user ? "Saved to your school account." : "Saved on this device."}</p></div>`;
     const form = document.getElementById("setup-form");
     const count = () => {
       const target = document.getElementById("selection-count");
@@ -77,6 +77,17 @@
 
     };
     count();
+    document.getElementById('missing-option')?.addEventListener('click', () => {
+      if (chosen.size >= optionCount) { showError('You already have four options. Deselect one before adding a missing option.'); return; }
+      chosen.add(unlisted.find(id => !chosen.has(id)));
+      render();
+      document.getElementById('missing-option').focus();
+    });
+    form.querySelectorAll('[data-remove-missing]').forEach(button => button.addEventListener('click', () => {
+      chosen.delete(button.dataset.removeMissing);
+      render();
+      document.getElementById('missing-option').focus();
+    }));
     form.addEventListener("change", (e) => {
       if (e.target.name === "option") {
         if (e.target.checked && chosen.size >= optionCount) { e.target.checked = false; showError("You can choose four options. Deselect one before choosing another."); return; }

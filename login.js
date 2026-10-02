@@ -5,7 +5,24 @@
     return;
   }
   document.getElementById("main").innerHTML =
-    `<div class="login-layout"><section class="login-intro"><div class="login-school-brand"><img src="images/ipswich-academy-small-logo.ico" alt="Ipswich Academy" class="login-school-logo"></div><div class="login-intro-copy"><img src="images/revision-hub-logo.png" alt="" class="login-hub-logo"><span class="login-label">Ipswich Academy</span><h1>Revision Hub</h1><p>Find revision materials for your courses and keep track of what you need to practise.</p><ul class="login-features"><li>Exam timings, marks and question structure</li><li>Resources from your subject departments</li><li>A checklist for topics and practice papers</li></ul><div class="login-intro-note"><svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Choose four options, then your science course.</span></div></div></section><section class="login-card" aria-labelledby="login-title"><h2 id="login-title">Sign in to Revision Hub</h2><p>Use your school Google account to save your subjects and checklist to your account.</p><p class="school-domain">name.surname@ipswichacademy.org.uk</p><div class="login-details"><h3>Before you start</h3><p>Choose the four option subjects you study, then select Combined or Triple Science. English, Maths and Science are included automatically.</p><h3>Keep your revision together</h3><p>Open your subject resources, check exam paper details and keep a checklist of what to practise. You can change your subjects in My revision.</p></div><div id="google-signin"></div><p id="signin-status" role="status">Checking school sign-in…</p><div class="login-guest"><button class="primary-button" id="continue-guest" type="button">Continue on this device</button><p>Your choices and checklist stay in this browser until you clear its data. They won’t sync to your school account.</p></div></section></div>`;
+    `<div class="login-layout login-welcome">
+      <section class="login-intro" aria-labelledby="welcome-title">
+        <div class="login-school-brand"><img src="images/ipswich-academy-small-logo.ico" alt="" class="login-school-logo"><span>Ipswich Academy</span></div>
+        <div class="login-intro-copy"><img src="images/revision-hub-logo.png" alt="" class="login-hub-logo"><h1 id="welcome-title">Revision starts <em>here.</em></h1><p>Your subjects. Your resources. Your next step.</p></div>
+        <ul class="login-feature-tiles" aria-label="What you can do">
+          <li><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>Subject resources</span></li>
+          <li><i class="fa-solid fa-file-lines" aria-hidden="true"></i><span>Exam papers</span></li>
+          <li><i class="fa-solid fa-list-check" aria-hidden="true"></i><span>Your checklist</span></li>
+        </ul>
+      </section>
+      <section class="login-card" aria-labelledby="login-title">
+        <div class="login-entry-symbol"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i></div>
+        <span class="login-kicker">IA Revision Hub</span><h2 id="login-title">Ready to revise?</h2><p>Sign in with your school account to keep your subjects and checklist together.</p>
+        <div class="school-account-hint"><i class="fa-solid fa-school" aria-hidden="true"></i><span>@ipswichacademy.org.uk</span></div>
+        <div id="google-signin"></div><p id="signin-status" role="status">Checking school sign-in…</p>
+        <div class="login-guest"><button class="primary-button" id="continue-guest" type="button"><i class="fa-solid fa-laptop" aria-hidden="true"></i> Continue on this device <svg class="ql-arrow" viewBox="0 0 24 24" fill="none" width="22" height="22" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><p>Saved in this browser only.</p></div>
+        <div class="login-first-time"><i class="fa-solid fa-sliders" aria-hidden="true"></i><div><strong>First visit?</strong><p>Choose your options and science course next.</p></div></div>
+      </section></div>`;
   document.getElementById("continue-guest").addEventListener("click", () => {
     try {
       sessionStorage.setItem("ia-guest-session", "true");

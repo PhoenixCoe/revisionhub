@@ -2985,3 +2985,58 @@ html body .login-details { margin:20px 0; padding:20px 0; border-top:1px solid #
 html body .login-details h3 { font-size:15px; margin:0 0 8px; }
 html body .login-details p { font-size:13px; line-height:1.65; margin:0 0 18px; }
 html body .login-details p:last-child { margin-bottom:0; }
+
+/* Keep the practice arrow beside the heading, outside the copy. */
+html body .exam-next { display:grid; grid-template-columns:28px minmax(0,1fr); align-items:start; gap:16px; }
+html body .exam-next > i { position:static; margin:3px 0 0; line-height:1; transform:rotate(90deg); }
+html body .exam-next > div { min-width:0; }
+html body .missing-options { margin-top:20px; padding-top:16px; border-top:1px solid #ddd; }
+html body .missing-options p { font-size:13px; line-height:1.6; margin:8px 0; }
+html body .missing-options ul { list-style:none; padding:0; }
+html body .missing-options li { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:#eaeaea; border-radius:12px; margin-top:8px; }
+
+/* Colourful welcome screen with a clear, single sign-in surface. */
+body[data-page="login"] { background: #f3edf7; }
+html body .login-welcome {
+  max-width: 1180px; min-height: 100dvh; padding: 40px 28px;
+  gap: 20px; align-content: center; grid-template-columns: 1.05fr 1fr;
+}
+html body .login-welcome .login-intro {
+  min-height: 610px; padding: 32px; border-radius: 32px 32px 56px 32px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  background-image: linear-gradient(180deg, #4c145b88, #431151e8), url("https://ipswichacademy.paradigmtrust.org/wp-content/uploads/2024/07/Ipswich-Academy-03-2000x1334.jpg");
+  box-shadow: none;
+}
+html body .login-welcome .login-school-brand { gap: 12px; color: white; font-size: 14px; font-weight: 700; }
+html body .login-welcome .login-school-logo { width: 40px; height: 40px; }
+html body .login-welcome .login-intro-copy { padding: 36px 0; }
+html body .login-welcome .login-hub-logo { width: 60px; height: 60px; }
+html body .login-welcome .login-intro-copy h1 { max-width: 360px; font-size: 48px; line-height: 1.12; margin: 16px 0; }
+html body .login-welcome .login-intro-copy h1 em { color: #ffcea6; font-style: normal; }
+html body .login-feature-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; list-style: none; padding: 0; margin: 0; }
+html body .login-feature-tiles li { display: flex; flex-direction: column; gap: 14px; padding: 20px 8px; color: #532568; background: #e9d8f4; border: 0; border-radius: 18px; font-size: 12px; text-align: center; font-weight: 600; }
+html body .login-feature-tiles li:nth-child(2) { background: #ffddbd; color: #71370e; }
+html body .login-feature-tiles li:nth-child(3) { background: #d4703f; color: #fff; }
+html body .login-feature-tiles i { font-size: 28px; }
+html body .login-welcome .login-card { padding: 40px; border: 0; border-radius: 32px 32px 32px 56px; background: #fff; box-shadow: none; }
+html body .login-entry-symbol { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 22px; font-size: 30px; color: #66197c; background: #e9d8f4; margin-bottom: 24px; }
+html body .login-kicker { font-size: 12px; font-weight: 700; color: #66197c; margin-bottom: 10px; }
+html body .login-welcome .login-card h2 { font-size: 34px; margin: 0 0 14px; letter-spacing: -.6px; }
+html body .login-welcome .login-card > p { font-size: 14px; line-height: 1.65; }
+html body .school-account-hint { display: flex; align-items: center; gap: 10px; font-size: 13px; padding: 12px 16px; margin: 16px 0; border-radius: 14px; background: #f4edf8; color: #572368; overflow-wrap: anywhere; }
+html body .login-welcome #signin-status { font-size: 12px; color: #555; margin: 8px 0; }
+html body .login-welcome .login-guest { padding-top: 20px; margin-top: 12px; border-color: #e9dff0; }
+html body .login-welcome #continue-guest { width: 100%; display: flex; align-items: center; gap: 12px; justify-content: center; font-size: 13px; padding: 16px; background: #66197c; color: #fff; }
+html body .login-welcome #continue-guest:hover { background: #501262; }
+html body .login-first-time { display: flex; align-items: center; gap: 16px; border: 0; border-radius: 20px; background: #ffead6; color: #693813; margin-top: 24px; padding: 18px; }
+html body .login-first-time > i { font-size: 24px; color: #b35a28; }
+html body .login-first-time strong { font-size: 13px; }
+html body .login-first-time p { font-size: 12px; line-height: 1.5; margin: 5px 0 0; color: #693813; }
+@media(max-width:760px) {
+ html body .login-welcome { grid-template-columns: 1fr; padding: 20px; gap: 16px; }
+ html body .login-welcome .login-intro { min-height: 0; border-radius: 28px; padding: 24px; }
+ html body .login-welcome .login-intro-copy { padding: 24px 0; }
+ html body .login-welcome .login-intro-copy h1 { font-size: 36px; }
+ html body .login-welcome .login-card { padding: 28px 24px; border-radius: 28px; }
+ html body .login-feature-tiles li { padding: 14px 6px; font-size: 11px; }
+}

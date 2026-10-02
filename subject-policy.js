@@ -5,11 +5,11 @@ window.RevisionSubjects = {
   valid(subjects) {
     const p = this.policy;
     if (!p || !Array.isArray(subjects) || new Set(subjects).size !== subjects.length) return false;
-    const known = [...p.core, ...p.combined, ...p.triple, ...p.options];
+    const known = [...p.core, ...p.combined, ...p.triple, ...p.options, ...p.unlisted];
     if (subjects.some(id => !known.includes(id)) || !p.core.every(id => subjects.includes(id))) return false;
     const science = subjects.filter(id => [...p.combined, ...p.triple].includes(id));
     const completeScience = [p.combined, p.triple].some(course => course.length === science.length && course.every(id => science.includes(id)));
-    return completeScience && subjects.filter(id => p.options.includes(id)).length === p.optionCount;
+    return completeScience && subjects.filter(id => [...p.options, ...p.unlisted].includes(id)).length === p.optionCount;
   }
 };
 window.RevisionSubjects.ready = fetch('subject-policy.json').then(response => {

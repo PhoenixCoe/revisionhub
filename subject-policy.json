@@ -28,5 +28,11 @@
     "subjects/pe",
     "subjects/performing-arts",
     "subjects/religious-studies"
+  ],
+  "unlisted": [
+    "unlisted-option/1",
+    "unlisted-option/2",
+    "unlisted-option/3",
+    "unlisted-option/4"
   ]
 }
